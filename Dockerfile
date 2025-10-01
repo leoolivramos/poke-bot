@@ -3,7 +3,8 @@ FROM python:3.10-slim
 WORKDIR /code
 
 ENV HF_HOME=/data
-# -------------------------
+
+RUN mkdir -p /data/snapshots && chmod 777 -R /data
 
 COPY ./requirements.txt /code/requirements.txt
 
