@@ -2,11 +2,10 @@ FROM python:3.10-slim
 
 WORKDIR /code
 
-ENV HF_HOME=/code/.cache
+ENV HF_HOME=/data/.cache
 
 COPY ./requirements.txt /code/requirements.txt
 
-# Instala as dependências
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY ./scripts /code/scripts
