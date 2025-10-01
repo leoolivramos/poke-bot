@@ -5,7 +5,7 @@ datasets
 peft
 trl
 accelerate
-bitsandbytes
+#bitsandbytes
 huggingface-hub
 
 fastapi
