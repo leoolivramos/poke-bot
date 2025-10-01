@@ -6,7 +6,7 @@ import torch
 import os
 
 base_model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-adapter_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "models", "mistral-lora-pokemon"))
+adapter_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "models", "tiny-lama-lora-pokemon"))
 
 app = FastAPI(
     title="Pokémon LLM API",
