@@ -1,0 +1,16 @@
+torch
+
+transformers
+datasets
+peft
+trl
+accelerate
+bitsandbytes
+huggingface-hub
+
+fastapi
+uvicorn[standard]
+
+python-telegram-bot
+requests
+python-dotenv
