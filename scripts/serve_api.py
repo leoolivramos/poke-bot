@@ -6,7 +6,7 @@ import torch
 import os
 
 base_model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-adapter_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "models", "tiny-lama-lora-pokemon"))
+adapter_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "models", "mistral-lora-pokemon"))
 
 app = FastAPI(
     title="Pokémon LLM API",
@@ -18,7 +18,6 @@ print("Iniciando o carregamento do modelo...")
 print(f"Carregando modelo base: {base_model_id}...")
 base_model = AutoModelForCausalLM.from_pretrained(
     base_model_id,
-    device_map="auto",
     trust_remote_code=True
 )
 
@@ -35,7 +34,8 @@ class Query(BaseModel):
 
 @app.post("/ask")
 async def ask_pokemon(query: Query):
-    prompt = f"<s>[INST] {query.question} [/INST]"
+    prompt = f"<s><|user|>\n{query.question}</s>\n<|assistant|>"
+    
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
     
     with torch.no_grad():
@@ -47,6 +47,6 @@ async def ask_pokemon(query: Query):
         )
         
     response_text = tokenizer.decode(output[0], skip_special_tokens=True)
-    answer = response_text.split("[/INST]")[-1].strip()
+    answer = response_text.split("<|assistant|>")[-1].strip()
 
     return {"question": query.question, "answer": answer}
