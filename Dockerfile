@@ -2,7 +2,8 @@ FROM python:3.10-slim
 
 WORKDIR /code
 
-ENV HF_HOME=/data/.cache
+ENV HF_HOME=/data
+# -------------------------
 
 COPY ./requirements.txt /code/requirements.txt
 
