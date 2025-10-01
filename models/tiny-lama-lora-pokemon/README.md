@@ -1,9 +1,9 @@
 ---
-base_model: mistralai/Mistral-7B-Instruct-v0.2
+base_model: TinyLlama/TinyLlama-1.1B-Chat-v1.0
 library_name: peft
-model_name: mistral-lora-pokemon
+model_name: tiny-lama-lora-pokemon
 tags:
-- base_model:adapter:mistralai/Mistral-7B-Instruct-v0.2
+- base_model:adapter:TinyLlama/TinyLlama-1.1B-Chat-v1.0
 - lora
 - sft
 - transformers
@@ -12,9 +12,9 @@ licence: license
 pipeline_tag: text-generation
 ---
 
-# Model Card for mistral-lora-pokemon
+# Model Card for tiny-lama-lora-pokemon
 
-This model is a fine-tuned version of [mistralai/Mistral-7B-Instruct-v0.2](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.2).
+This model is a fine-tuned version of [TinyLlama/TinyLlama-1.1B-Chat-v1.0](https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0).
 It has been trained using [TRL](https://github.com/huggingface/trl).
 
 ## Quick start

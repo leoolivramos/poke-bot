@@ -1,9 +1,9 @@
 ---
-base_model: mistralai/Mistral-7B-Instruct-v0.2
+base_model: TinyLlama/TinyLlama-1.1B-Chat-v1.0
 library_name: peft
 pipeline_tag: text-generation
 tags:
-- base_model:adapter:mistralai/Mistral-7B-Instruct-v0.2
+- base_model:adapter:TinyLlama/TinyLlama-1.1B-Chat-v1.0
 - lora
 - sft
 - transformers

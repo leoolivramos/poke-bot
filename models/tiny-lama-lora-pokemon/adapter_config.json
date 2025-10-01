@@ -1,7 +1,7 @@
 {
   "alpha_pattern": {},
   "auto_mapping": null,
-  "base_model_name_or_path": "mistralai/Mistral-7B-Instruct-v0.2",
+  "base_model_name_or_path": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
   "bias": "none",
   "corda_config": null,
   "eva_config": null,
