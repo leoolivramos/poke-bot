@@ -1,17 +1,16 @@
 FROM python:3.10-slim
 
 WORKDIR /code
-
 ENV HF_HOME=/data
-
 RUN mkdir -p /data/snapshots && chmod 777 -R /data
 
 COPY ./requirements.txt /code/requirements.txt
-
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY ./scripts /code/scripts
 COPY ./models /code/models
+
+RUN ls -lR /code
 
 # Expõe a porta que a API vai usar
 EXPOSE 8000
