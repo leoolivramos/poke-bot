@@ -18,7 +18,6 @@ print("Iniciando o carregamento do modelo...")
 print(f"Carregando modelo base: {base_model_id}...")
 base_model = AutoModelForCausalLM.from_pretrained(
     base_model_id,
-    device_map="auto",
     trust_remote_code=True
 )
 
