@@ -4,8 +4,8 @@ import requests
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, ContextTypes, filters
 
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "8118490784:AAHHF6xcI1cmyhPTXcU7rSE-dcKQyM2oArI")
-API_URL = os.getenv("API_URL", "https://ledevrel-ia-pokemon.hf.space/ask")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "Aqui vai seu token do bot")
+API_URL = os.getenv("API_URL", "http://localhost:8000/ask")
 
 # ---------------- HANDLERS ----------------
 
