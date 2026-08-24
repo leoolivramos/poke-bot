@@ -1,57 +1,101 @@
-import requests
+import asyncio
 import json
 import random
-import os
+import sys
+from pathlib import Path
+import httpx
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 BASE_URL = "https://pokeapi.co/api/v2/pokemon/"
 SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/"
-TOTAL_POKEMON = 151
+TOTAL_POKEMON = 500
+CONCURRENCY_LIMIT = 20
 
-def get_pokemon_data(pokemon_id):
-    """Busca dados de um Pokémon específico na PokéAPI."""
-    try:
-        response = requests.get(f"{BASE_URL}{pokemon_id}")
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.HTTPError as err:
-        print(f"Erro ao buscar dados do Pokémon {pokemon_id}: {err}")
-        return None
+# Garantir caminho absoluto da pasta data/processed na raiz do repositório
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+OUTPUT_DIR = PROJECT_ROOT / "data" / "processed"
 
-def get_species_description(pokemon_id):
-    """Busca a descrição da Pokédex (flavor text)."""
-    try:
-        response = requests.get(f"{SPECIES_URL}{pokemon_id}")
-        response.raise_for_status()
-        species_data = response.json()
-        for entry in species_data.get('flavor_text_entries', []):
-            if entry['language']['name'] == 'pt' or entry['language']['name'] == 'en':
-                return entry['flavor_text'].replace('\n', ' ').replace('\f', ' ')
-        return "Nenhuma descrição encontrada."
-    except requests.exceptions.HTTPError:
-        return "Nenhuma descrição encontrada."
+async def fetch_pokemon(client: httpx.AsyncClient, sem: asyncio.Semaphore, pokemon_id: int):
+    """Busca dados brutos do Pokémon e da espécie simultaneamente na PokéAPI."""
+    async with sem:
+        try:
+            p_resp = await client.get(f"{BASE_URL}{pokemon_id}", timeout=15.0)
+            if p_resp.status_code != 200:
+                return None
+            p_data = p_resp.json()
 
+            s_resp = await client.get(f"{SPECIES_URL}{pokemon_id}", timeout=15.0)
+            s_data = s_resp.json() if s_resp.status_code == 200 else {}
 
-def generate_qa_pairs(pokemon_data):
-    """Gera pares de pergunta e resposta a partir dos dados do Pokémon."""
-    if not pokemon_data:
+            return parse_pokemon(p_data, s_data)
+        except Exception as err:
+            print(f"Erro ao buscar Pokémon #{pokemon_id}: {err}")
+            return None
+
+def parse_pokemon(data: dict, species_data: dict) -> dict:
+    """Extrai informações estruturadas do Pokémon."""
+    p_id = data.get("id")
+    name = data.get("name", "").capitalize()
+    
+    types = [t["type"]["name"].capitalize() for t in data.get("types", [])]
+    abilities = [a["ability"]["name"].replace("-", " ").capitalize() for a in data.get("abilities", [])]
+    
+    # Imagem oficial
+    sprites = data.get("sprites", {})
+    official_art = sprites.get("other", {}).get("official-artwork", {}).get("front_default")
+    image_url = official_art or sprites.get("front_default") or ""
+
+    # Stats
+    stats = {}
+    for s in data.get("stats", []):
+        stat_name = s["stat"]["name"]
+        stats[stat_name] = s["base_stat"]
+
+    height = data.get("height", 0) / 10.0  # decímetros para metros
+    weight = data.get("weight", 0) / 10.0  # hectogramas para kg
+
+    # Descrição (Flavor Text)
+    description = "Nenhuma descrição encontrada."
+    for entry in species_data.get("flavor_text_entries", []):
+        lang = entry.get("language", {}).get("name")
+        if lang in ["pt", "en"]:
+            description = entry["flavor_text"].replace("\n", " ").replace("\f", " ").strip()
+            if lang == "pt":
+                break  # Prefere português se disponível
+
+    return {
+        "id": p_id,
+        "name": name,
+        "types": types,
+        "abilities": abilities,
+        "stats": stats,
+        "height": height,
+        "weight": weight,
+        "image_url": image_url,
+        "description": description,
+    }
+
+def generate_qa_pairs(info: dict) -> list:
+    """Gera pares de pergunta e resposta com variações ricas."""
+    if not info:
         return []
 
-    name = pokemon_data['name'].capitalize()
-    types = [t['type']['name'].capitalize() for t in pokemon_data['types']]
-    abilities = [a['ability']['name'].capitalize() for a in pokemon_data['abilities']]
-    description = get_species_description(pokemon_data['id'])
-
-    if len(types) > 1:
-        types_str = f"{' e '.join(types)}"
-    else:
-        types_str = types[0]
+    name = info["name"]
+    types_str = " e ".join(info["types"]) if len(info["types"]) > 1 else info["types"][0]
+    abilities_str = ", ".join(info["abilities"])
+    desc = info["description"]
     
-    abilities_str = ', '.join(abilities)
+    hp = info["stats"].get("hp", "N/A")
+    attack = info["stats"].get("attack", "N/A")
+    defense = info["stats"].get("defense", "N/A")
+    speed = info["stats"].get("speed", "N/A")
 
     pairs = [
         {
             "instruction": f"Qual é o tipo do {name}?",
-            "output": f"{name} é do tipo {types_str}."
+            "output": f"{name} é um Pokémon do tipo {types_str}."
         },
         {
             "instruction": f"Quais são os tipos do {name}?",
@@ -59,48 +103,65 @@ def generate_qa_pairs(pokemon_data):
         },
         {
             "instruction": f"Fale sobre o {name}.",
-            "output": f"{name} é um Pokémon do tipo {types_str}. {description}"
+            "output": f"{name} é um Pokémon do tipo {types_str}. {desc}"
         },
         {
             "instruction": f"Descreva o {name}.",
-            "output": f"{description} Seus tipos são {types_str} e suas habilidades incluem {abilities_str}."
+            "output": f"{desc} Ele é do tipo {types_str}, mede {info['height']}m e pesa {info['weight']}kg."
         },
         {
-            "instruction": f"Quais as habilidades do {name}?",
+            "instruction": f"Quais são as habilidades do {name}?",
             "output": f"As habilidades do {name} são: {abilities_str}."
+        },
+        {
+            "instruction": f"Quais os atributos e stats do {name}?",
+            "output": f"{name} possui HP: {hp}, Ataque: {attack}, Defesa: {defense} e Velocidade: {speed}."
         }
     ]
     return pairs
 
+async def create_dataset():
+    """Baixa os dados de forma assíncrona, gera o dataset e salva os arquivos JSONL e JSON."""
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    sem = asyncio.Semaphore(CONCURRENCY_LIMIT)
 
-def create_dataset():
-    """Cria o dataset completo e salva em train.jsonl e valid.jsonl."""
-    output_dir = "../data/processed"
+    print(f"Iniciando download assíncrono de {TOTAL_POKEMON} Pokémon da PokéAPI...")
+    async with httpx.AsyncClient() as client:
+        tasks = [fetch_pokemon(client, sem, i) for i in range(1, TOTAL_POKEMON + 1)]
+        results = await asyncio.gather(*tasks)
 
-    os.makedirs(output_dir, exist_ok=True)
+    valid_pokemon = [p for p in results if p is not None]
+    print(f"{len(valid_pokemon)} Pokémon coletados com sucesso!")
 
+    # Salvar base de dados JSON estruturada para uso rápido pela API/Bot
+    db_file = OUTPUT_DIR / "pokemon_db.json"
+    db_data = {p["name"].lower(): p for p in valid_pokemon}
+    db_data.update({str(p["id"]): p for p in valid_pokemon})
+    with open(db_file, "w", encoding="utf-8") as f:
+        json.dump(db_data, f, ensure_ascii=False, indent=2)
+
+    # Gerar QA pairs
     all_qa_pairs = []
-    for i in range(1, TOTAL_POKEMON + 1):
-        print(f"Processando Pokémon #{i}...")
-        data = get_pokemon_data(i)
-        if data:
-            all_qa_pairs.extend(generate_qa_pairs(data))
-    
+    for p in valid_pokemon:
+        all_qa_pairs.extend(generate_qa_pairs(p))
+
     random.shuffle(all_qa_pairs)
-    
     split_index = int(len(all_qa_pairs) * 0.8)
     train_data = all_qa_pairs[:split_index]
     valid_data = all_qa_pairs[split_index:]
 
-    with open(os.path.join(output_dir, "train.jsonl"), "w", encoding="utf-8") as f:
+    with open(OUTPUT_DIR / "train.jsonl", "w", encoding="utf-8") as f:
         for item in train_data:
             f.write(json.dumps(item, ensure_ascii=False) + "\n")
-            
-    with open(os.path.join(output_dir, "valid.jsonl"), "w", encoding="utf-8") as f:
+
+    with open(OUTPUT_DIR / "valid.jsonl", "w", encoding="utf-8") as f:
         for item in valid_data:
             f.write(json.dumps(item, ensure_ascii=False) + "\n")
 
-    print(f"Dataset criado com sucesso! {len(train_data)} exemplos de treino e {len(valid_data)} de validação.")
+    print(f"Dataset criado com sucesso!")
+    print(f" - Treino: {len(train_data)} exemplos em {OUTPUT_DIR / 'train.jsonl'}")
+    print(f" - Validação: {len(valid_data)} exemplos em {OUTPUT_DIR / 'valid.jsonl'}")
+    print(f" - Banco de dados estruturado salvo em {db_file}")
 
 if __name__ == "__main__":
-    create_dataset()
+    asyncio.run(create_dataset())
