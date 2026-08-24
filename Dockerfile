@@ -9,6 +9,8 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY ./scripts /code/scripts
 COPY ./models /code/models
+COPY ./bot /code/bot
+COPY ./data /code/data
 
 RUN ls -lR /code
 
