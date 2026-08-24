@@ -10,7 +10,11 @@ huggingface-hub
 
 fastapi
 uvicorn[standard]
+httpx
 
 python-telegram-bot
 requests
 python-dotenv
+pytest
+
+bitsandbytes
