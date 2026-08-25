@@ -2,7 +2,9 @@ import asyncio
 import json
 import random
 import sys
+import time
 from pathlib import Path
+from deep_translator import MyMemoryTranslator
 import httpx
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -10,12 +12,57 @@ if hasattr(sys.stdout, "reconfigure"):
 
 BASE_URL = "https://pokeapi.co/api/v2/pokemon/"
 SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/"
-TOTAL_POKEMON = 500
+TOTAL_POKEMON = 155
 CONCURRENCY_LIMIT = 20
 
 # Garantir caminho absoluto da pasta data/processed na raiz do repositório
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = PROJECT_ROOT / "data" / "processed"
+translator = MyMemoryTranslator(source="en-US", target="pt-BR")
+translation_cache = {}
+TYPE_TRANSLATIONS = {
+    "bug": "Inseto",
+    "dark": "Sombrio",
+    "dragon": "Dragão",
+    "electric": "Elétrico",
+    "fairy": "Fada",
+    "fighting": "Lutador",
+    "fire": "Fogo",
+    "flying": "Voador",
+    "ghost": "Fantasma",
+    "grass": "Grama",
+    "ground": "Terrestre",
+    "ice": "Gelo",
+    "normal": "Normal",
+    "poison": "Veneno",
+    "psychic": "Psíquico",
+    "rock": "Pedra",
+    "steel": "Aço",
+    "water": "Água",
+}
+
+def translate_text(text: str) -> str:
+    """Traduz um texto da PokéAPI para português brasileiro."""
+    if not text or text in translation_cache:
+        return translation_cache.get(text, text)
+
+    for attempt in range(3):
+        try:
+            time.sleep(0.3)
+            translated = translator.translate(text)
+            if translated and not translated.lower().startswith(("error ", "server error")):
+                translation_cache[text] = translated
+                return translated
+        except Exception:
+            if attempt == 2:
+                break
+            time.sleep(1)
+
+    return text
+
+def translate_type(type_name: str) -> str:
+    """Traduz os tipos conhecidos sem depender de um serviço externo."""
+    return TYPE_TRANSLATIONS.get(type_name, translate_text(type_name))
 
 async def fetch_pokemon(client: httpx.AsyncClient, sem: asyncio.Semaphore, pokemon_id: int):
     """Busca dados brutos do Pokémon e da espécie simultaneamente na PokéAPI."""
@@ -39,8 +86,8 @@ def parse_pokemon(data: dict, species_data: dict) -> dict:
     p_id = data.get("id")
     name = data.get("name", "").capitalize()
     
-    types = [t["type"]["name"].capitalize() for t in data.get("types", [])]
-    abilities = [a["ability"]["name"].replace("-", " ").capitalize() for a in data.get("abilities", [])]
+    types = [translate_type(type_data["type"]["name"]) for type_data in data.get("types", [])]
+    abilities = [translate_text(a["ability"]["name"].replace("-", " ")) for a in data.get("abilities", [])]
     
     # Imagem oficial
     sprites = data.get("sprites", {})
@@ -62,6 +109,7 @@ def parse_pokemon(data: dict, species_data: dict) -> dict:
         lang = entry.get("language", {}).get("name")
         if lang in ["pt", "en"]:
             description = entry["flavor_text"].replace("\n", " ").replace("\f", " ").strip()
+            description = translate_text(description) if lang == "en" else description
             if lang == "pt":
                 break  # Prefere português se disponível
 
@@ -83,7 +131,7 @@ def generate_qa_pairs(info: dict) -> list:
         return []
 
     name = info["name"]
-    types_str = " e ".join(info["types"]) if len(info["types"]) > 1 else info["types"][0]
+    types_str = " e ".join(info["types"])
     abilities_str = ", ".join(info["abilities"])
     desc = info["description"]
     
