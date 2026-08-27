@@ -1,5 +1,3 @@
-{"instruction": "Qual é o tipo do Bulbasaur?", "output": "Bulbasaur é um Pokémon do tipo Grama e Veneno."}
-{"instruction": "Descreva o Charmeleon.", "output": "Se ficar agitado durante a batalha, ele jorra chamas intensas, incinerando seus arredores. Ele é do tipo Fogo, mede 1.1m e pesa 19.0kg."}
-{"instruction": "Quais são as habilidades do Charmeleon?", "output": "As habilidades do Charmeleon são: Chama, Energia solar ."}
-{"instruction": "Quais os atributos e stats do Venusaur?", "output": "Venusaur possui HP: 80, Ataque: 82, Defesa: 83 e Velocidade: 80."}
-{"instruction": "Quais são os tipos do Venusaur?", "output": "Os tipos do Venusaur são Grama e Veneno."}
+{"instruction": "Quais são os tipos do Ivysaur?", "output": "Os tipos do Ivysaur são Grass e Poison."}
+{"instruction": "Quais são os tipos do Bulbasaur?", "output": "Os tipos do Bulbasaur são Grass e Poison."}
+{"instruction": "Fale sobre o Bulbasaur.", "output": "Bulbasaur é um Pokémon do tipo Grass e Poison. While it is young, it uses the nutrients that are stored in the seed on its back in order to grow."}

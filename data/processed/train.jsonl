@@ -1,19 +1,9 @@
-{"instruction": "Quais são as habilidades do Venusaur?", "output": "As habilidades do Venusaur são: supercrescimento, Clorofila."}
-{"instruction": "Quais os atributos e stats do Charmander?", "output": "Charmander possui HP: 39, Ataque: 52, Defesa: 43 e Velocidade: 65."}
-{"instruction": "Quais são as habilidades do Charmander?", "output": "As habilidades do Charmander são: Chama, Energia solar ."}
-{"instruction": "Qual é o tipo do Charmander?", "output": "Charmander é um Pokémon do tipo Fogo."}
-{"instruction": "Quais os atributos e stats do Charmeleon?", "output": "Charmeleon possui HP: 58, Ataque: 64, Defesa: 58 e Velocidade: 80."}
-{"instruction": "Quais são as habilidades do Bulbasaur?", "output": "As habilidades do Bulbasaur são: supercrescimento, Clorofila."}
-{"instruction": "Descreva o Bulbasaur.", "output": "Enquanto é jovem, usa os nutrientes que são armazenados na semente nas costas para crescer. Ele é do tipo Grama e Veneno, mede 0.7m e pesa 6.9kg."}
-{"instruction": "Fale sobre o Venusaur.", "output": "Venusaur é um Pokémon do tipo Grama e Veneno. Um aroma encantador flutua de sua flor. A fragrância acalma aqueles envolvidos em uma batalha."}
-{"instruction": "Descreva o Venusaur.", "output": "Um aroma encantador flutua de sua flor. A fragrância acalma aqueles envolvidos em uma batalha. Ele é do tipo Grama e Veneno, mede 2.0m e pesa 100.0kg."}
-{"instruction": "Qual é o tipo do Venusaur?", "output": "Venusaur é um Pokémon do tipo Grama e Veneno."}
-{"instruction": "Fale sobre o Charmeleon.", "output": "Charmeleon é um Pokémon do tipo Fogo. Se ficar agitado durante a batalha, ele jorra chamas intensas, incinerando seus arredores."}
-{"instruction": "Fale sobre o Bulbasaur.", "output": "Bulbasaur é um Pokémon do tipo Grama e Veneno. Enquanto é jovem, usa os nutrientes que são armazenados na semente nas costas para crescer."}
-{"instruction": "Descreva o Charmander.", "output": "A partir do momento em que nasce, uma chama queima na ponta de sua cauda. Sua vida acabaria se a chama se apagasse. Ele é do tipo Fogo, mede 0.6m e pesa 8.5kg."}
+{"instruction": "Quais são as habilidades do Bulbasaur?", "output": "As habilidades do Bulbasaur são: Overgrow, Chlorophyll."}
+{"instruction": "Qual é o tipo do Ivysaur?", "output": "Ivysaur é um Pokémon do tipo Grass e Poison."}
+{"instruction": "Descreva o Ivysaur.", "output": "Exposure to sunlight adds to its strength. Sunlight also makes the bud on its back grow larger. Ele é do tipo Grass e Poison, mede 1.0m e pesa 13.0kg."}
+{"instruction": "Qual é o tipo do Bulbasaur?", "output": "Bulbasaur é um Pokémon do tipo Grass e Poison."}
+{"instruction": "Descreva o Bulbasaur.", "output": "While it is young, it uses the nutrients that are stored in the seed on its back in order to grow. Ele é do tipo Grass e Poison, mede 0.7m e pesa 6.9kg."}
+{"instruction": "Quais os atributos e stats do Ivysaur?", "output": "Ivysaur possui HP: 60, Ataque: 62, Defesa: 63 e Velocidade: 60."}
+{"instruction": "Quais são as habilidades do Ivysaur?", "output": "As habilidades do Ivysaur são: Overgrow, Chlorophyll."}
+{"instruction": "Fale sobre o Ivysaur.", "output": "Ivysaur é um Pokémon do tipo Grass e Poison. Exposure to sunlight adds to its strength. Sunlight also makes the bud on its back grow larger."}
 {"instruction": "Quais os atributos e stats do Bulbasaur?", "output": "Bulbasaur possui HP: 45, Ataque: 49, Defesa: 49 e Velocidade: 45."}
-{"instruction": "Qual é o tipo do Charmeleon?", "output": "Charmeleon é um Pokémon do tipo Fogo."}
-{"instruction": "Quais são os tipos do Charmeleon?", "output": "Os tipos do Charmeleon são Fogo."}
-{"instruction": "Fale sobre o Charmander.", "output": "Charmander é um Pokémon do tipo Fogo. A partir do momento em que nasce, uma chama queima na ponta de sua cauda. Sua vida acabaria se a chama se apagasse."}
-{"instruction": "Quais são os tipos do Bulbasaur?", "output": "Os tipos do Bulbasaur são Grama e Veneno."}
-{"instruction": "Quais são os tipos do Charmander?", "output": "Os tipos do Charmander são Fogo."}

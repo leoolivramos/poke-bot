@@ -3,12 +3,12 @@
     "id": 1,
     "name": "Bulbasaur",
     "types": [
-      "Grama",
-      "Veneno"
+      "Grass",
+      "Poison"
     ],
     "abilities": [
-      "supercrescimento",
-      "Clorofila"
+      "Overgrow",
+      "Chlorophyll"
     ],
     "stats": {
       "hp": 45,
@@ -21,88 +21,42 @@
     "height": 0.7,
     "weight": 6.9,
     "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-    "description": "Enquanto é jovem, usa os nutrientes que são armazenados na semente nas costas para crescer."
+    "description": "While it is young, it uses the nutrients that are stored in the seed on its back in order to grow."
   },
-  "venusaur": {
-    "id": 3,
-    "name": "Venusaur",
+  "ivysaur": {
+    "id": 2,
+    "name": "Ivysaur",
     "types": [
-      "Grama",
-      "Veneno"
+      "Grass",
+      "Poison"
     ],
     "abilities": [
-      "supercrescimento",
-      "Clorofila"
+      "Overgrow",
+      "Chlorophyll"
     ],
     "stats": {
-      "hp": 80,
-      "attack": 82,
-      "defense": 83,
-      "special-attack": 100,
-      "special-defense": 100,
-      "speed": 80
-    },
-    "height": 2.0,
-    "weight": 100.0,
-    "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
-    "description": "Um aroma encantador flutua de sua flor. A fragrância acalma aqueles envolvidos em uma batalha."
-  },
-  "charmander": {
-    "id": 4,
-    "name": "Charmander",
-    "types": [
-      "Fogo"
-    ],
-    "abilities": [
-      "Chama",
-      "Energia solar "
-    ],
-    "stats": {
-      "hp": 39,
-      "attack": 52,
-      "defense": 43,
-      "special-attack": 60,
-      "special-defense": 50,
-      "speed": 65
-    },
-    "height": 0.6,
-    "weight": 8.5,
-    "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
-    "description": "A partir do momento em que nasce, uma chama queima na ponta de sua cauda. Sua vida acabaria se a chama se apagasse."
-  },
-  "charmeleon": {
-    "id": 5,
-    "name": "Charmeleon",
-    "types": [
-      "Fogo"
-    ],
-    "abilities": [
-      "Chama",
-      "Energia solar "
-    ],
-    "stats": {
-      "hp": 58,
-      "attack": 64,
-      "defense": 58,
+      "hp": 60,
+      "attack": 62,
+      "defense": 63,
       "special-attack": 80,
-      "special-defense": 65,
-      "speed": 80
+      "special-defense": 80,
+      "speed": 60
     },
-    "height": 1.1,
-    "weight": 19.0,
-    "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
-    "description": "Se ficar agitado durante a batalha, ele jorra chamas intensas, incinerando seus arredores."
+    "height": 1.0,
+    "weight": 13.0,
+    "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
+    "description": "Exposure to sunlight adds to its strength. Sunlight also makes the bud on its back grow larger."
   },
   "1": {
     "id": 1,
     "name": "Bulbasaur",
     "types": [
-      "Grama",
-      "Veneno"
+      "Grass",
+      "Poison"
     ],
     "abilities": [
-      "supercrescimento",
-      "Clorofila"
+      "Overgrow",
+      "Chlorophyll"
     ],
     "stats": {
       "hp": 45,
@@ -115,76 +69,30 @@
     "height": 0.7,
     "weight": 6.9,
     "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-    "description": "Enquanto é jovem, usa os nutrientes que são armazenados na semente nas costas para crescer."
+    "description": "While it is young, it uses the nutrients that are stored in the seed on its back in order to grow."
   },
-  "3": {
-    "id": 3,
-    "name": "Venusaur",
+  "2": {
+    "id": 2,
+    "name": "Ivysaur",
     "types": [
-      "Grama",
-      "Veneno"
+      "Grass",
+      "Poison"
     ],
     "abilities": [
-      "supercrescimento",
-      "Clorofila"
+      "Overgrow",
+      "Chlorophyll"
     ],
     "stats": {
-      "hp": 80,
-      "attack": 82,
-      "defense": 83,
-      "special-attack": 100,
-      "special-defense": 100,
-      "speed": 80
-    },
-    "height": 2.0,
-    "weight": 100.0,
-    "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png",
-    "description": "Um aroma encantador flutua de sua flor. A fragrância acalma aqueles envolvidos em uma batalha."
-  },
-  "4": {
-    "id": 4,
-    "name": "Charmander",
-    "types": [
-      "Fogo"
-    ],
-    "abilities": [
-      "Chama",
-      "Energia solar "
-    ],
-    "stats": {
-      "hp": 39,
-      "attack": 52,
-      "defense": 43,
-      "special-attack": 60,
-      "special-defense": 50,
-      "speed": 65
-    },
-    "height": 0.6,
-    "weight": 8.5,
-    "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
-    "description": "A partir do momento em que nasce, uma chama queima na ponta de sua cauda. Sua vida acabaria se a chama se apagasse."
-  },
-  "5": {
-    "id": 5,
-    "name": "Charmeleon",
-    "types": [
-      "Fogo"
-    ],
-    "abilities": [
-      "Chama",
-      "Energia solar "
-    ],
-    "stats": {
-      "hp": 58,
-      "attack": 64,
-      "defense": 58,
+      "hp": 60,
+      "attack": 62,
+      "defense": 63,
       "special-attack": 80,
-      "special-defense": 65,
-      "speed": 80
+      "special-defense": 80,
+      "speed": 60
     },
-    "height": 1.1,
-    "weight": 19.0,
-    "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
-    "description": "Se ficar agitado durante a batalha, ele jorra chamas intensas, incinerando seus arredores."
+    "height": 1.0,
+    "weight": 13.0,
+    "image_url": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
+    "description": "Exposure to sunlight adds to its strength. Sunlight also makes the bud on its back grow larger."
   }
 }

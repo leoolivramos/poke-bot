@@ -16,6 +16,6 @@ python-telegram-bot
 requests
 python-dotenv
 pytest
-deep-translator
+googletrans
 
 bitsandbytes
